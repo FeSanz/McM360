@@ -10,6 +10,8 @@ public class CameraController : MonoBehaviour
     private float SpeedRotation = 5;
     [SerializeField, Tooltip("Velocidad de rotación automática")]
     private float SpeedRotationAuto = 6f;
+    [SerializeField, Tooltip("Velocidad del zoom automático")]
+    private float SpeedZoomAuto = 0.005f;
 
     [SerializeField, Tooltip("Slider para zoom")]
     private Slider SliderZoom;
@@ -50,7 +52,7 @@ public class CameraController : MonoBehaviour
 
                 if (cam.fieldOfView>45)
                 {
-                    cam.fieldOfView = cam.fieldOfView - 0.005f;
+                    cam.fieldOfView = cam.fieldOfView - SpeedZoomAuto;
                 }
             }
             print(idle_time);
