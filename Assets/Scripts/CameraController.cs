@@ -23,6 +23,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         cam = GetComponent<Camera>();
+        StartCoroutine(WaitStart());
     }
     void Update()
     {
@@ -93,5 +94,11 @@ public class CameraController : MonoBehaviour
     {
         //float field_view = cam.fieldOfView;
         
+    }
+
+    IEnumerator WaitStart()
+    {
+        yield return new WaitForSeconds(2.7f);
+        gameObject.GetComponent<Animator>().enabled = false;
     }
 }

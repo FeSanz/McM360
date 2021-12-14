@@ -32,8 +32,7 @@ AnimatorState:
   m_Name: camera-start
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -2793041056841942045}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -83,9 +82,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -1346209872258735865}
     m_Position: {x: 260, y: 120, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 8196089421353374581}
-    m_Position: {x: 260, y: -80, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
