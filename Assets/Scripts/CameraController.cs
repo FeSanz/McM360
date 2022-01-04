@@ -96,6 +96,10 @@ public class CameraController : MonoBehaviour
         
     }
 
+    public void BackZoom()
+    {
+        cam.fieldOfView = 60;
+    }
     IEnumerator WaitStart()
     {
         yield return new WaitForSeconds(2.7f);
