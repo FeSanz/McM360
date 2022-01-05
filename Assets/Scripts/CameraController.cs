@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
         cam = GetComponent<Camera>();
         StartCoroutine(WaitStart());
     }
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetMouseButton(0) && !IsMouseOverUI())
         {
@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
             idle_time = 0;
             cam.fieldOfView = cam.fieldOfView + 5;
         } else
-        if (cam.fieldOfView >= 7 && Input.GetAxis("Mouse ScrollWheel") > 0)
+        if (cam.fieldOfView > 10 && Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             idle_time = 0;
             cam.fieldOfView = cam.fieldOfView - 5;
@@ -51,7 +51,12 @@ public class CameraController : MonoBehaviour
                 angles.y += Time.deltaTime * SpeedRotationAuto;
                 transform.rotation = Quaternion.Euler(angles);
 
-                if (cam.fieldOfView>45)
+                if (cam.fieldOfView < 44)
+                {
+                    //cam.fieldOfView = cam.fieldOfView - SpeedZoomAuto;
+                    cam.fieldOfView = 60;
+                }
+                if (cam.fieldOfView > 45)
                 {
                     cam.fieldOfView = cam.fieldOfView - SpeedZoomAuto;
                 }
@@ -90,15 +95,34 @@ public class CameraController : MonoBehaviour
         print("Slider:" + SliderZoom.value);
         transform.position = new Vector3(0,0, (SliderZoom.value * Time.deltaTime) * 100);
     }
+    public void moreZoom()
+    {
+        if (cam.fieldOfView > 10)
+        {
+            cam.fieldOfView = cam.fieldOfView - 5;
+        }
+    }
+    public void lessZoom()
+    {
+        if (cam.fieldOfView <= 120)
+        {
+            cam.fieldOfView = cam.fieldOfView + 5;
+        }
+    }
     void MouseWheeling()
     {
         //float field_view = cam.fieldOfView;
         
     }
-
-    public void BackZoom()
+    public void StopRotationAndMovement()
     {
+        idle_time = 0;
+    }
+    public void ResetCameraProperties()
+    {
+        idle_time = 0;
         cam.fieldOfView = 60;
+        transform.eulerAngles = new Vector3(0,0,0);
     }
     IEnumerator WaitStart()
     {

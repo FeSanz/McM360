@@ -8,12 +8,14 @@ public class PlacesController : MonoBehaviour
     private GameObject[] room;
     public void ChangeRoomTour()
     {
+        GetComponent<CameraController>().ResetCameraProperties();
         room[0].SetActive(false);
         room[1].SetActive(true);
     }
     
     public void ChangeRoomTour0()
     {
+        GetComponent<CameraController>().ResetCameraProperties();
         room[0].SetActive(true);
         room[1].SetActive(false);
     }
