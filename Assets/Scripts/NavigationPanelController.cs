@@ -10,7 +10,8 @@ public class NavigationPanelController : MonoBehaviour
   [SerializeField, Tooltip("Animacion para mostrar menu")]
   private Animator MenuRoomsAnimator;
 
-  private bool isPressedButtonMenu = false;
+  [SerializeField, Tooltip("Canvas Group de Panel Rooms")]
+  private CanvasGroup PanelRooms;
   public void ShowCloseAppPanel()
   {
     CloseAppAnimator.Play("Fade-in");
@@ -33,15 +34,13 @@ public class NavigationPanelController : MonoBehaviour
 
   public void ShowHideMenuRooms()
   {
-    if (isPressedButtonMenu)
+    if (PanelRooms.alpha > 0.9f)
     {
-      isPressedButtonMenu = false;
-      MenuRoomsAnimator.Play("HideMenu");
+      MenuRoomsAnimator.Play("HideGaleryMenu");
     }
     else
     {
-      isPressedButtonMenu = true;
-      MenuRoomsAnimator.Play("ShowMenu");
+      MenuRoomsAnimator.Play("ShowGaleryMenu");
     }
   }
 
