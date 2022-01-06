@@ -12,118 +12,142 @@ public class CameraController : MonoBehaviour
     private float SpeedRotationAuto = 6f;
     [SerializeField, Tooltip("Velocidad del zoom automático")]
     private float SpeedZoomAuto = 0.005f;
-
-    [SerializeField, Tooltip("Slider para zoom")]
-    private Slider SliderZoom;
-
-    [SerializeField, Tooltip("Tiempo a esperar la inactividad")]
+    [SerializeField, Tooltip("Tiempo de espera para activar la autorotación")]
     private float waitTime;
-    private Camera cam;
-    private float idle_time = 0;
+    
+    private Camera _camera;
+    private float _idleTime = 0;
+    
     private void Start()
     {
-        cam = GetComponent<Camera>();
+        _camera = GetComponent<Camera>();
         StartCoroutine(WaitStart());
     }
-    void FixedUpdate()
+    void Update()
     {
+        //Valida y ejecuta rotacion y zoom con raton
         if (Input.GetMouseButton(0) && !IsMouseOverUI())
         {
-            idle_time = 0;
+            _idleTime = 0;
             transform.eulerAngles -= SpeedRotation * new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
-        } else
-        if (cam.fieldOfView <= 120 && Input.GetAxis("Mouse ScrollWheel") < 0)
+        } 
+        else if (_camera.fieldOfView <= 120 && Input.GetAxis("Mouse ScrollWheel") < 0 && !IsMouseOverUI())
         {
-            idle_time = 0;
-            cam.fieldOfView = cam.fieldOfView + 5;
-        } else
-        if (cam.fieldOfView > 10 && Input.GetAxis("Mouse ScrollWheel") > 0)
+            _idleTime = 0;
+            _camera.fieldOfView = _camera.fieldOfView + 5;
+        } 
+        else if (_camera.fieldOfView > 10 && Input.GetAxis("Mouse ScrollWheel") > 0 && !IsMouseOverUI())
         {
-            idle_time = 0;
-            cam.fieldOfView = cam.fieldOfView - 5;
+            _idleTime = 0;
+            _camera.fieldOfView = _camera.fieldOfView - 5;
         }
         else
         {
-            idle_time += Time.deltaTime;
-            if(idle_time >= waitTime)
+            _idleTime += Time.deltaTime; //Inicia tiempo de inactividad
+            if(_idleTime >= waitTime) //Valida tiempo de espera
             {
+                //Inicia autorotacion
                 var angles = transform.rotation.eulerAngles;
                 angles.y += Time.deltaTime * SpeedRotationAuto;
                 transform.rotation = Quaternion.Euler(angles);
 
-                if (cam.fieldOfView < 44)
+                //Valida campo de vision de camara y resetea zoom para autorotacion
+                if (_camera.fieldOfView < 44)
                 {
-                    //cam.fieldOfView = cam.fieldOfView - SpeedZoomAuto;
-                    cam.fieldOfView = 60;
+                    _camera.fieldOfView = 60;
                 }
-                if (cam.fieldOfView > 45)
+                if (_camera.fieldOfView > 45)
                 {
-                    cam.fieldOfView = cam.fieldOfView - SpeedZoomAuto;
+                    _camera.fieldOfView = _camera.fieldOfView - SpeedZoomAuto;
                 }
             }
-            print(idle_time);
         }
     }
 
+    /// <summary>
+    /// Verifica si el cursor no se encuentra encima de un elemento de la UI para evitar rotar
+    /// </summary>
+    /// <returns>True si esta encima de un elemento de la UI y viceversa</returns>
     private bool IsMouseOverUI()
     {
         return EventSystem.current.IsPointerOverGameObject();
     }
 
+    /// <summary>
+    /// Método para rotar a la izquiera con botones en menú
+    /// </summary>
     public void LeftCamera()
     {
         transform.eulerAngles += new Vector3(0,(-SpeedRotation * Time.deltaTime) * 100,0);
     }
     
+    /// <summary>
+    /// Método para rotar a la derecha con botones en menú
+    /// </summary>
     public void RigthCamera()
     {
         transform.eulerAngles += new Vector3(0,(SpeedRotation * Time.deltaTime) * 100,0);
     }
     
+    /// <summary>
+    /// Método para rotar hacia arriba con botones en menú
+    /// </summary>
     public void UpCamera()
     {
         transform.eulerAngles += new Vector3((-SpeedRotation * Time.deltaTime) * 100,0,0);
     }
     
+    /// <summary>
+    /// Método para rotar hacia abajo con botones en menú
+    /// </summary>
     public void DownCamera()
     {
         transform.eulerAngles += new Vector3((SpeedRotation * Time.deltaTime) * 100,0, 0);
     }
     
-    public void Zoom()
-    {
-        print("Slider:" + SliderZoom.value);
-        transform.position = new Vector3(0,0, (SliderZoom.value * Time.deltaTime) * 100);
-    }
+    /// <summary>
+    /// Aumentar zoom con botones en menú
+    /// </summary>
     public void moreZoom()
     {
-        if (cam.fieldOfView > 10)
+        if (_camera.fieldOfView > 10)
         {
-            cam.fieldOfView = cam.fieldOfView - 5;
+            _camera.fieldOfView = _camera.fieldOfView - 5;
         }
     }
+    /// <summary>
+    /// Disminuir zoom con botones en menú
+    /// </summary>
     public void lessZoom()
     {
-        if (cam.fieldOfView <= 120)
+        if (_camera.fieldOfView <= 120)
         {
-            cam.fieldOfView = cam.fieldOfView + 5;
+            _camera.fieldOfView = _camera.fieldOfView + 5;
         }
     }
-    void MouseWheeling()
-    {
-        //float field_view = cam.fieldOfView;
-        
-    }
+    
+    /// <summary>
+    /// Detener autorotación
+    /// </summary>
     public void StopRotationAndMovement()
     {
-        idle_time = 0;
+        _idleTime = 0;
     }
+    
+    /// <summary>
+    /// Reinicio de rotacion y zoom de camara
+    /// </summary>
     public void ResetCameraProperties()
     {
-        idle_time = 0;
-        cam.fieldOfView = 60;
+        _idleTime = 0;
+        _camera.fieldOfView = 60;
         transform.eulerAngles = new Vector3(0,0,0);
     }
+    
+    /// <summary>
+    /// Desactivar animacion inicial de cámara
+    /// </summary>
+    /// <returns></returns>
     IEnumerator WaitStart()
     {
         yield return new WaitForSeconds(2.7f);
