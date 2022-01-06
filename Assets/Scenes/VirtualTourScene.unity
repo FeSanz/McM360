@@ -3730,9 +3730,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919262fb44c870f4697f9d3fe7ba3749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedRotation: 1.5
+  SpeedRotation: 2
   SpeedRotationAuto: 6
+  FieldOfViewDefault: 60
   SpeedZoomAuto: 0.005
+  ZoomMaximum: 70
+  ZoomManimum: 30
   waitTime: 12
 --- !u!114 &963194230
 MonoBehaviour:
@@ -4861,8 +4864,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1080973875}
   m_HandleRect: {fileID: 1080973872}
   m_Direction: 0
-  m_Value: 0.000000068075245
-  m_Size: 0.59257776
+  m_Value: 0.00000020422561
+  m_Size: 0.5925776
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

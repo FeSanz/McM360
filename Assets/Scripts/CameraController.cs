@@ -7,11 +7,17 @@ using UnityEngine.UI;
 public class CameraController : MonoBehaviour
 {
     [SerializeField, Tooltip("Velocidad de rotación con ratón")]
-    private float SpeedRotation = 5;
+    private float SpeedRotation = 2.0f;
     [SerializeField, Tooltip("Velocidad de rotación automática")]
-    private float SpeedRotationAuto = 6f;
+    private float SpeedRotationAuto = 6.0f;
+    [SerializeField, Tooltip("Campo de visión de la camara por default")]
+    private float FieldOfViewDefault = 60.0f;
     [SerializeField, Tooltip("Velocidad del zoom automático")]
     private float SpeedZoomAuto = 0.005f;
+    [SerializeField, Tooltip("Valor máximo para alejarse con zoom")]
+    private float ZoomMaximum = 70.0f;
+    [SerializeField, Tooltip("Valor minímo para acercarse con zoom")]
+    private float ZoomManimum = 30.0f;
     [SerializeField, Tooltip("Tiempo de espera para activar la autorotación")]
     private float waitTime;
     
@@ -31,12 +37,12 @@ public class CameraController : MonoBehaviour
             _idleTime = 0;
             transform.eulerAngles -= SpeedRotation * new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
         } 
-        else if (_camera.fieldOfView <= 120 && Input.GetAxis("Mouse ScrollWheel") < 0 && !IsMouseOverUI())
+        else if (_camera.fieldOfView < ZoomMaximum && Input.GetAxis("Mouse ScrollWheel") < 0 && !IsMouseOverUI())
         {
             _idleTime = 0;
             _camera.fieldOfView = _camera.fieldOfView + 5;
         } 
-        else if (_camera.fieldOfView > 10 && Input.GetAxis("Mouse ScrollWheel") > 0 && !IsMouseOverUI())
+        else if (_camera.fieldOfView > ZoomManimum && Input.GetAxis("Mouse ScrollWheel") > 0 && !IsMouseOverUI())
         {
             _idleTime = 0;
             _camera.fieldOfView = _camera.fieldOfView - 5;
@@ -54,7 +60,7 @@ public class CameraController : MonoBehaviour
                 //Valida campo de vision de camara y resetea zoom para autorotacion
                 if (_camera.fieldOfView < 44)
                 {
-                    _camera.fieldOfView = 60;
+                    _camera.fieldOfView = FieldOfViewDefault;
                 }
                 if (_camera.fieldOfView > 45)
                 {
@@ -110,7 +116,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public void moreZoom()
     {
-        if (_camera.fieldOfView > 10)
+        if (_camera.fieldOfView > ZoomManimum)
         {
             _camera.fieldOfView = _camera.fieldOfView - 5;
         }
@@ -120,7 +126,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public void lessZoom()
     {
-        if (_camera.fieldOfView <= 120)
+        if (_camera.fieldOfView < ZoomMaximum)
         {
             _camera.fieldOfView = _camera.fieldOfView + 5;
         }
@@ -140,7 +146,7 @@ public class CameraController : MonoBehaviour
     public void ResetCameraProperties()
     {
         _idleTime = 0;
-        _camera.fieldOfView = 60;
+        _camera.fieldOfView = FieldOfViewDefault;
         transform.eulerAngles = new Vector3(0,0,0);
     }
     
