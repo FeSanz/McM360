@@ -19,8 +19,21 @@ public class LoungeController : MonoBehaviour
             }
         }
         transform.GetChild(except).gameObject.SetActive(true);
+    }
 
-        
+    private void Update()
+    {
+        for (int index = 0; index < transform.childCount; index++)
+        {
+            if (transform.GetChild(index).gameObject.activeSelf)
+            {
+                SelectorPanelUI(index);
+            }
+        }
+    }
+
+    private void SelectorPanelUI(int except)
+    {
         for (int j = 0; j < PanelContent.transform.childCount; j++)
         {
             if (PanelContent.transform.GetChild(j).gameObject.transform.GetChild(1).gameObject.activeSelf)

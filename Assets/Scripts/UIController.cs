@@ -5,34 +5,38 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-  [SerializeField, Tooltip("Animacion para mostrar galeria de habitaciones en menu")]
-  private Animator MenuRoomsAnimator;
-
-  [SerializeField, Tooltip("Canvas Group de Panel Rooms")]
-  private CanvasGroup PanelRooms;
-
   [SerializeField, Tooltip("Arreglo gameobjets de salas")]
   private GameObject[] Salas;
+  
+  [SerializeField, Tooltip("Arreglo galerias de salas")]
+  private GameObject[] ContentGaleries;
 
+  private int _currentLounge = 0;
   public void ShowHideMenuRooms()
   {
-    if (PanelRooms.alpha > 0.9f)
+    if (ContentGaleries[_currentLounge].GetComponent<CanvasGroup>().alpha > 0.9f)
     {
-      MenuRoomsAnimator.Play("HideGaleryMenu");
+      ContentGaleries[_currentLounge].GetComponent<Animator>().Play("HideGaleryMenu");
     }
     else
     {
-      MenuRoomsAnimator.Play("ShowGaleryMenu");
+      ContentGaleries[_currentLounge].GetComponent<Animator>().Play("ShowGaleryMenu");
     }
   }
 
   public void ShowHideSalas(int except)
   {
-    foreach (GameObject Sala in Salas)
+    _currentLounge = except;
+    for (int i = 0; i < Salas.Length; i++)
     {
-      Sala.SetActive(false);
+      if (Salas[i].activeSelf && ContentGaleries[i].activeSelf)
+      {
+        Salas[i].SetActive(false);
+        ContentGaleries[i].SetActive(false);
+      }
     }
-    
+    ContentGaleries[except].SetActive(true);
     Salas[except].SetActive(true);
   }
+  
 }
