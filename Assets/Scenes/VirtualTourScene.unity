@@ -18118,7 +18118,7 @@ MonoBehaviour:
   SpeedRotationAuto: 6
   FieldOfViewDefault: 95
   SpeedZoomAuto: 0.005
-  ZoomMaximum: 95
+  ZoomMaximum: 120
   ZoomManimum: 75
   waitTime: 30
 --- !u!95 &963194231
