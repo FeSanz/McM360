@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -22,6 +23,16 @@ public class UIController : MonoBehaviour
     {
       ContentGaleries[_currentLounge].GetComponent<Animator>().Play("ShowGaleryMenu");
     }
+  }
+
+  public void ScrollActive()
+  {
+    ContentGaleries[_currentLounge].SetActive(true);
+  }
+  
+  public void ScrollDesactive()
+  {
+    ContentGaleries[_currentLounge].SetActive(false);
   }
 
   public void ShowHideSalas(int except)
