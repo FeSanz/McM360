@@ -24,6 +24,9 @@ public class CameraController : MonoBehaviour
     private Camera _camera;
     private float _idleTime = 0;
     
+    private float _horizontal = 0f;
+    private float _vertical = 0f;
+    
     private void Start()
     {
         _camera = GetComponent<Camera>();
@@ -35,7 +38,14 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButton(0) && !IsMouseOverUI())
         {
             _idleTime = 0;
-            transform.eulerAngles -= SpeedRotation * new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
+            _horizontal -= SpeedRotation * Input.GetAxis("Mouse Y");
+            _vertical += SpeedRotation * Input.GetAxis("Mouse X");
+            
+            transform.eulerAngles = new Vector3(_horizontal, _vertical, 0f);
+            
+            //transform.eulerAngles -= SpeedRotation * new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
+            //transform.eulerAngles += SpeedRotation * new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
+            //transform.Rotate((Input.GetAxis("Mouse Y") * SpeedRotation * Time.deltaTime), (Input.GetAxis("Mouse X") * SpeedRotation * Time.deltaTime), 0);
         } 
         else if (_camera.fieldOfView < ZoomMaximum && Input.GetAxis("Mouse ScrollWheel") < 0 && !IsMouseOverUI())
         {
