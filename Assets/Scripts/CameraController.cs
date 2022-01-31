@@ -20,7 +20,12 @@ public class CameraController : MonoBehaviour
     private float ZoomManimum = 30.0f;
     [SerializeField, Tooltip("Tiempo de espera para activar la autorotación")]
     private float waitTime;
-    
+    [SerializeField, Tooltip("Máxima rotación de la cámara hacia arriba")]
+    private float lookUpMax = 70;
+    [SerializeField, Tooltip("Máxima rotación de la cámara hacia abajo")]
+    private float lookDownMin = -70;
+    Quaternion camRotation;
+
     private Camera _camera;
     private float _idleTime = 0;
     
@@ -38,11 +43,19 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButton(0) && !IsMouseOverUI())
         {
             _idleTime = 0;
-            _horizontal -= SpeedRotation * Input.GetAxis("Mouse Y");
+
+            _idleTime = 0;
+            camRotation.x += Input.GetAxis("Mouse Y") * SpeedRotation;
+            camRotation.y -= Input.GetAxis("Mouse X") * SpeedRotation;
+
+            camRotation.x = Mathf.Clamp(camRotation.x, lookDownMin, lookUpMax);
+
+            transform.localRotation = Quaternion.Euler(camRotation.x, camRotation.y, camRotation.z);
+            /*_horizontal -= SpeedRotation * Input.GetAxis("Mouse Y");
             _vertical += SpeedRotation * Input.GetAxis("Mouse X");
             
-            transform.eulerAngles = new Vector3(_horizontal, _vertical, 0f);
-            
+            transform.eulerAngles = new Vector3(_horizontal, _vertical, 0f);*/
+
             //transform.eulerAngles -= SpeedRotation * new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
             //transform.eulerAngles += SpeedRotation * new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
             //transform.Rotate((Input.GetAxis("Mouse Y") * SpeedRotation * Time.deltaTime), (Input.GetAxis("Mouse X") * SpeedRotation * Time.deltaTime), 0);
