@@ -110,6 +110,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public void LeftCamera()
     {
+        StopRotationAndMovement();
         transform.eulerAngles += new Vector3(0,(-SpeedRotation * Time.deltaTime) * 100,0);
     }
     
@@ -118,6 +119,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public void RigthCamera()
     {
+        StopRotationAndMovement();
         transform.eulerAngles += new Vector3(0,(SpeedRotation * Time.deltaTime) * 100,0);
     }
     
@@ -126,6 +128,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public void UpCamera()
     {
+        StopRotationAndMovement();
         transform.eulerAngles += new Vector3((-SpeedRotation * Time.deltaTime) * 100,0,0);
     }
     
@@ -134,6 +137,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public void DownCamera()
     {
+        StopRotationAndMovement();
         transform.eulerAngles += new Vector3((SpeedRotation * Time.deltaTime) * 100,0, 0);
     }
     
@@ -142,6 +146,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public void moreZoom()
     {
+        StopRotationAndMovement();
         if (_camera.fieldOfView > ZoomManimum)
         {
             _camera.fieldOfView = _camera.fieldOfView - 5;
@@ -152,6 +157,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public void lessZoom()
     {
+        StopRotationAndMovement();
         if (_camera.fieldOfView < ZoomMaximum)
         {
             _camera.fieldOfView = _camera.fieldOfView + 5;
