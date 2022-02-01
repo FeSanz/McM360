@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UIElements.Image;
 
 public class UIController : MonoBehaviour
 {
@@ -18,10 +20,14 @@ public class UIController : MonoBehaviour
     if (ContentGaleries[_currentLounge].GetComponent<CanvasGroup>().alpha > 0.9f)
     {
       ContentGaleries[_currentLounge].GetComponent<Animator>().Play("HideGaleryMenu");
+      ContentGaleries[_currentLounge].GetComponent<Graphic>().raycastTarget = false;
+      ContentGaleries[_currentLounge].gameObject.transform.GetChild(1).gameObject.SetActive(false);
     }
     else
     {
       ContentGaleries[_currentLounge].GetComponent<Animator>().Play("ShowGaleryMenu");
+      ContentGaleries[_currentLounge].GetComponent<Graphic>().raycastTarget = true;
+      ContentGaleries[_currentLounge].gameObject.transform.GetChild(1).gameObject.SetActive(true);
     }
   }
 
