@@ -44,4 +44,15 @@ public class LoungeController : MonoBehaviour
         
         PanelContent.transform.GetChild(except).gameObject.transform.GetChild(1).gameObject.SetActive(true);
     }
+
+    public void DesactiveChilds()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.activeInHierarchy)
+            {
+                child.gameObject.SetActive(false);
+            }
+        }
+    }
 }
