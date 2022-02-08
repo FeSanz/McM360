@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -14,6 +15,9 @@ public class UIController : MonoBehaviour
   [SerializeField, Tooltip("Arreglo galerias de salas")]
   private GameObject[] ContentGaleries;
 
+  [SerializeField, Tooltip("Etiqueta para el botón de galería")]
+  private TextMeshProUGUI tagGalleryButton;
+
   private int _currentLounge = 0;
   public void ShowHideMenuRooms()
   {
@@ -22,12 +26,14 @@ public class UIController : MonoBehaviour
       ContentGaleries[_currentLounge].GetComponent<Animator>().Play("HideGaleryMenu");
       ContentGaleries[_currentLounge].GetComponent<Graphic>().raycastTarget = false;
       ContentGaleries[_currentLounge].gameObject.transform.GetChild(1).gameObject.SetActive(false);
+      tagGalleryButton.SetText("Presione para ver galería");
     }
     else
     {
       ContentGaleries[_currentLounge].GetComponent<Animator>().Play("ShowGaleryMenu");
       ContentGaleries[_currentLounge].GetComponent<Graphic>().raycastTarget = true;
       ContentGaleries[_currentLounge].gameObject.transform.GetChild(1).gameObject.SetActive(true);
+      tagGalleryButton.SetText("Presione para ocultar galería");
     }
   }
 
