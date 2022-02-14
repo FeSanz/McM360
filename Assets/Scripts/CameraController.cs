@@ -110,8 +110,10 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public void LeftCamera()
     {
-        StopRotationAndMovement();
-        transform.eulerAngles += new Vector3(0,(-SpeedRotation * Time.deltaTime) * 100,0);
+        StopRotationAndMovement(); 
+        _horizontal += (-SpeedRotation * Time.deltaTime) * 100;
+        transform.eulerAngles = new Vector3(_vertical,_horizontal,0);
+       
     }
     
     /// <summary>
@@ -120,7 +122,9 @@ public class CameraController : MonoBehaviour
     public void RigthCamera()
     {
         StopRotationAndMovement();
-        transform.eulerAngles += new Vector3(0,(SpeedRotation * Time.deltaTime) * 100,0);
+        _horizontal += (SpeedRotation * Time.deltaTime) * 100;
+        transform.eulerAngles = new Vector3(_vertical,_horizontal,0);
+        
     }
     
     /// <summary>
@@ -129,7 +133,9 @@ public class CameraController : MonoBehaviour
     public void UpCamera()
     {
         StopRotationAndMovement();
-        transform.eulerAngles += new Vector3((-SpeedRotation * Time.deltaTime) * 100,0,0);
+        _vertical += (-SpeedRotation * Time.deltaTime) * 100;
+        transform.eulerAngles = new Vector3(_vertical,_horizontal,0);
+       
     }
     
     /// <summary>
@@ -138,7 +144,8 @@ public class CameraController : MonoBehaviour
     public void DownCamera()
     {
         StopRotationAndMovement();
-        transform.eulerAngles += new Vector3((SpeedRotation * Time.deltaTime) * 100,0, 0);
+        _vertical += (SpeedRotation * Time.deltaTime) * 100;
+        transform.eulerAngles = new Vector3(_vertical,_horizontal, 0);
     }
     
     /// <summary>
